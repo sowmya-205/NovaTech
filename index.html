@@ -1,0 +1,3469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaTech B2C Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0d0b1e;
+            color: #e2e8f0;
+            line-height: 1.6;
+            min-height: 100vh
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font: inherit;
+            color: inherit
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        ul {
+            list-style: none
+        }
+
+        input,
+        select,
+        textarea {
+            font: inherit;
+            color: inherit
+        }
+
+        :root {
+            --p: #7c3aed;
+            --p2: #6d28d9;
+            --acc: #a855f7;
+            --acc2: #c084fc;
+            --bg: #0d0b1e;
+            --bg2: #13102a;
+            --bg3: #1a1535;
+            --bg4: #221e3d;
+            --card: #1a1535;
+            --card2: #221e3d;
+            --card3: #2a2550;
+            --border: #2d2850;
+            --border2: #3d3870;
+            --text: #e2e8f0;
+            --muted: #94a3b8;
+            --dim: #64748b;
+            --green: #22c55e;
+            --red: #ef4444;
+            --amber: #f59e0b;
+            --blue: #3b82f6;
+            --pink: #ec4899;
+            --sh: 0 4px 20px rgba(0, 0, 0, .4);
+            --sh2: 0 8px 32px rgba(0, 0, 0, .5);
+            --sh3: 0 2px 8px rgba(0, 0, 0, .3);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px
+        }
+
+        .page {
+            display: none;
+            padding-bottom: 80px
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeUp .3s ease
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            background: rgba(13, 11, 30, .92);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border)
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            height: 64px
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 19px;
+            color: #fff;
+            cursor: pointer;
+            flex-shrink: 0
+        }
+
+        .logo-box {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            display: grid;
+            place-items: center;
+            font-weight: 900;
+            font-size: 17px;
+            color: #fff;
+            box-shadow: 0 0 16px rgba(168, 85, 247, .5)
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2px;
+            margin-left: 16px
+        }
+
+        .nav-link {
+            padding: 7px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all .18s
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: rgba(124, 58, 237, .18);
+            color: #a855f7
+        }
+
+        .nav-search {
+            flex: 1;
+            max-width: 400px;
+            position: relative
+        }
+
+        .nav-search input {
+            width: 100%;
+            height: 38px;
+            padding: 0 14px 0 40px;
+            background: var(--bg3);
+            border: 1px solid var(--border2);
+            border-radius: 999px;
+            color: var(--text);
+            font-size: 14px;
+            transition: all .2s
+        }
+
+        .nav-search input:focus {
+            outline: none;
+            border-color: var(--acc);
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, .2)
+        }
+
+        .nav-search input::placeholder {
+            color: var(--dim)
+        }
+
+        .search-ic {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--dim);
+            font-size: 15px;
+            pointer-events: none
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: auto
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            color: var(--muted);
+            transition: all .18s;
+            position: relative
+        }
+
+        .icon-btn:hover {
+            background: rgba(124, 58, 237, .18);
+            color: #a855f7
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            min-width: 17px;
+            height: 17px;
+            padding: 0 4px;
+            background: linear-gradient(135deg, #ec4899, #f43f5e);
+            color: #fff;
+            border-radius: 999px;
+            font-size: 10px;
+            font-weight: 800;
+            display: grid;
+            place-items: center;
+            border: 2px solid var(--bg)
+        }
+
+        .nav-mobile-toggle {
+            display: none
+        }
+    </style>
+    <style>
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all .22s;
+            white-space: nowrap;
+            cursor: pointer
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(124, 58, 237, .4)
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(124, 58, 237, .5)
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #a855f7;
+            border: 1.5px solid #7c3aed
+        }
+
+        .btn-outline:hover {
+            background: rgba(124, 58, 237, .15);
+            transform: translateY(-1px)
+        }
+
+        .btn-ghost {
+            background: var(--bg4);
+            color: var(--text);
+            border: 1px solid var(--border2)
+        }
+
+        .btn-ghost:hover {
+            background: var(--card3)
+        }
+
+        .btn-sm {
+            padding: 7px 14px;
+            font-size: 13px
+        }
+
+        .btn-lg {
+            padding: 12px 26px;
+            font-size: 15px
+        }
+
+        .btn-full {
+            width: 100%
+        }
+
+        .btn-link {
+            color: #a855f7;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color .18s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px
+        }
+
+        .btn-link:hover {
+            color: var(--acc2)
+        }
+
+        /* ===== SECTION ===== */
+        .section {
+            padding: 36px 0 8px
+        }
+
+        .section-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 22px
+        }
+
+        .section-head h2 {
+            font-size: 22px;
+            font-weight: 800;
+            color: #fff
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(130deg, #1a0533 0%, #2d1b69 35%, #4c1d95 65%, #5b21b6 100%);
+            border-radius: 20px;
+            padding: 48px 52px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 24px;
+            border: 1px solid rgba(167, 139, 250, .2)
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            right: -80px;
+            width: 360px;
+            height: 360px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(168, 85, 247, .25), transparent 70%)
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: 30%;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(124, 58, 237, .15), transparent 70%)
+        }
+
+        .hero-text {
+            max-width: 500px;
+            position: relative;
+            z-index: 1
+        }
+
+        .hero-text h1 {
+            color: #fff;
+            font-size: 38px;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 14px
+        }
+
+        .hero-text h1 span {
+            background: linear-gradient(90deg, #c084fc, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent
+        }
+
+        .hero-text p {
+            color: rgba(255, 255, 255, .75);
+            font-size: 16px;
+            margin-bottom: 26px;
+            line-height: 1.6
+        }
+
+        .hero-btn {
+            background: #fff;
+            color: #7c3aed;
+            font-weight: 700;
+            padding: 12px 28px;
+            font-size: 15px;
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .3);
+            transition: all .2s
+        }
+
+        .hero-btn:hover {
+            background: #f3e8ff;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .35)
+        }
+
+        .hero-visual {
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1
+        }
+
+        .hero-ring {
+            width: 290px;
+            height: 290px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(168, 85, 247, .18), rgba(109, 40, 217, .08));
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            box-shadow: 0 0 70px rgba(168, 85, 247, .5), 0 20px 60px rgba(0, 0, 0, .5);
+            border: 1.5px solid rgba(168, 85, 247, .35);
+            backdrop-filter: blur(4px)
+        }
+
+        .hero-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 2
+        }
+
+        .hero-dots span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .3);
+            cursor: pointer;
+            transition: all .2s
+        }
+
+        .hero-dots span.active {
+            width: 24px;
+            border-radius: 999px;
+            background: #a855f7
+        }
+
+        /* ===== CATEGORIES ===== */
+        .cat-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 14px
+        }
+
+        .cat-card {
+            background: var(--card);
+            border: 1px solid var(--border2);
+            border-radius: 14px;
+            padding: 22px 12px;
+            text-align: center;
+            transition: all .25s;
+            cursor: pointer
+        }
+
+        .cat-card:hover {
+            transform: translateY(-5px);
+            border-color: #7c3aed;
+            box-shadow: 0 8px 28px rgba(124, 58, 237, .25), var(--sh)
+        }
+
+        .cat-card.active-cat {
+            background: linear-gradient(135deg, rgba(124, 58, 237, .2), rgba(168, 85, 247, .1));
+            border-color: #7c3aed;
+            box-shadow: 0 0 20px rgba(124, 58, 237, .2)
+        }
+
+        .cat-emoji {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 12px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            font-size: 28px
+        }
+
+        .cat-em1 {
+            background: linear-gradient(135deg, #312e81, #4c1d95)
+        }
+
+        .cat-em2 {
+            background: linear-gradient(135deg, #831843, #9d174d)
+        }
+
+        .cat-em3 {
+            background: linear-gradient(135deg, #064e3b, #065f46)
+        }
+
+        .cat-em4 {
+            background: linear-gradient(135deg, #78350f, #92400e)
+        }
+
+        .cat-em5 {
+            background: linear-gradient(135deg, #1e3a5f, #1d4ed8)
+        }
+
+        .cat-em6 {
+            background: linear-gradient(135deg, #2d2850, #4c1d95)
+        }
+
+        .cat-card>span {
+            display: block;
+            font-weight: 600;
+            font-size: 13px;
+            color: #e2e8f0
+        }
+
+        /* ===== PRODUCT CARDS ===== */
+        .prod-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px
+        }
+
+        .prod-grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px
+        }
+
+        .prod-card {
+            background: var(--card);
+            border: 1px solid var(--border2);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all .25s;
+            display: flex;
+            flex-direction: column;
+            position: relative
+        }
+
+        .prod-card:hover {
+            transform: translateY(-5px);
+            border-color: #7c3aed;
+            box-shadow: 0 12px 40px rgba(124, 58, 237, .25), var(--sh2)
+        }
+
+        .prod-img {
+            height: 200px;
+            display: grid;
+            place-items: center;
+            font-size: 80px;
+            position: relative;
+            overflow: hidden
+        }
+
+        .pi-h {
+            background: linear-gradient(135deg, #2d1b69, #4c1d95)
+        }
+
+        .pi-l {
+            background: linear-gradient(135deg, #1e3a5f, #1d4ed8)
+        }
+
+        .pi-w {
+            background: linear-gradient(135deg, #064e3b, #059669)
+        }
+
+        .pi-a {
+            background: linear-gradient(135deg, #312e81, #4338ca)
+        }
+
+        .pi-p {
+            background: linear-gradient(135deg, #7c2d12, #c2410c)
+        }
+
+        .pi-c {
+            background: linear-gradient(135deg, #831843, #be185d)
+        }
+
+        .pi-t {
+            background: linear-gradient(135deg, #134e4a, #0d9488)
+        }
+
+        .pi-s {
+            background: linear-gradient(135deg, #713f12, #ca8a04)
+        }
+
+        .prod-emoji {
+            font-size: 88px;
+            line-height: 1;
+            transition: transform .3s
+        }
+
+        .prod-card:hover .prod-emoji {
+            transform: scale(1.1)
+        }
+
+        /* Real product photos */
+        .prod-real-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform .4s ease;
+            display: block;
+        }
+
+        .prod-card:hover .prod-real-img {
+            transform: scale(1.1);
+        }
+
+        .prod-img.has-photo {
+            background: #111;
+            overflow: hidden;
+            padding: 0;
+            position: relative;
+        }
+
+        .prod-img.has-photo .prod-badge,
+        .prod-img.has-photo .wish-btn {
+            position: absolute;
+            z-index: 3;
+        }
+
+        .prod-img.has-photo::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, .45) 0%, transparent 50%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .prod-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 9px;
+            border-radius: 999px;
+            z-index: 3;
+        }
+
+        .prod-badge.red-b {
+            background: linear-gradient(135deg, #dc2626, #f43f5e)
+        }
+
+        .prod-badge.green-b {
+            background: linear-gradient(135deg, #059669, #10b981)
+        }
+
+        .wish-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .08);
+            display: grid;
+            place-items: center;
+            font-size: 17px;
+            border: 1px solid rgba(255, 255, 255, .12);
+            transition: all .2s;
+            z-index: 2;
+            color: #94a3b8
+        }
+
+        .wish-btn:hover {
+            background: rgba(239, 68, 68, .15);
+            border-color: rgba(239, 68, 68, .3);
+            color: #ef4444
+        }
+
+        .wish-btn.active {
+            background: rgba(239, 68, 68, .15);
+            border-color: #ef4444;
+            color: #ef4444
+        }
+
+        .prod-body {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            gap: 5px
+        }
+
+        .prod-cat {
+            font-size: 11px;
+            font-weight: 600;
+            color: #a855f7;
+            text-transform: uppercase;
+            letter-spacing: .5px
+        }
+
+        .prod-name {
+            font-weight: 700;
+            font-size: 15px;
+            color: #fff;
+            cursor: pointer;
+            line-height: 1.3
+        }
+
+        .prod-name:hover {
+            color: #a855f7
+        }
+
+        .prod-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        .stars {
+            color: #f59e0b;
+            font-size: 12px
+        }
+
+        .prod-price {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 4px 0 10px
+        }
+
+        .p-now {
+            font-size: 20px;
+            font-weight: 800;
+            color: #fff
+        }
+
+        .p-was {
+            font-size: 12px;
+            color: var(--dim);
+            text-decoration: line-through
+        }
+
+        .p-off {
+            font-size: 11px;
+            font-weight: 700;
+            color: #22c55e;
+            background: rgba(34, 197, 94, .12);
+            padding: 2px 7px;
+            border-radius: 999px;
+            border: 1px solid rgba(34, 197, 94, .2)
+        }
+    </style>
+    <style>
+        /* ===== BREADCRUMB ===== */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--muted);
+            padding: 20px 0 6px;
+            flex-wrap: wrap
+        }
+
+        .breadcrumb a {
+            cursor: pointer;
+            transition: color .15s
+        }
+
+        .breadcrumb a:hover {
+            color: #a855f7
+        }
+
+        .breadcrumb .sep {
+            color: var(--dim)
+        }
+
+        .breadcrumb .cur {
+            color: var(--text);
+            font-weight: 600
+        }
+
+        /* ===== FILTERS / LISTING ===== */
+        .list-layout {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 24px;
+            padding-top: 10px
+        }
+
+        .sidebar {
+            background: var(--card);
+            border: 1px solid var(--border2);
+            border-radius: 16px;
+            padding: 20px;
+            align-self: start;
+            position: sticky;
+            top: 76px
+        }
+
+        .sb-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px
+        }
+
+        .sb-head h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff
+        }
+
+        .sb-head a {
+            font-size: 13px;
+            color: #a855f7;
+            cursor: pointer;
+            font-weight: 600
+        }
+
+        .filter-group {
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .filter-group:last-child {
+            border-bottom: none;
+            padding-bottom: 0
+        }
+
+        .fg-title {
+            font-weight: 700;
+            font-size: 13px;
+            color: #fff;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: .5px
+        }
+
+        .range-vals {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 8px
+        }
+
+        .range-vals b {
+            color: var(--text)
+        }
+
+        input[type=range] {
+            width: 100%;
+            accent-color: #7c3aed;
+            cursor: pointer
+        }
+
+        .ck-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 13px;
+            cursor: pointer;
+            transition: color .15s
+        }
+
+        .ck-row:hover {
+            color: #a855f7
+        }
+
+        .ck-row .lft {
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .ck-row input {
+            accent-color: #7c3aed;
+            width: 15px;
+            height: 15px
+        }
+
+        .ck-cnt {
+            color: var(--dim);
+            font-size: 11px;
+            background: var(--bg4);
+            padding: 1px 6px;
+            border-radius: 999px;
+            font-weight: 600
+        }
+
+        .list-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 10px
+        }
+
+        .list-top h2 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #fff
+        }
+
+        .list-top h2 span {
+            color: var(--muted);
+            font-weight: 400;
+            font-size: 16px
+        }
+
+        .sort-sel {
+            padding: 8px 14px;
+            background: var(--card);
+            border: 1px solid var(--border2);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 13px;
+            cursor: pointer
+        }
+
+        .sort-sel:focus {
+            outline: none;
+            border-color: #7c3aed
+        }
+
+        /* ===== PRODUCT DETAIL ===== */
+        .detail-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding-top: 10px
+        }
+
+        .detail-gallery {
+            background: var(--card);
+            border: 1px solid var(--border2);
+            border-radius: 16px;
+            padding: 28px
+        }
+
+        .d-main {
+            height: 360px;
+            display: grid;
+            place-items: center;
+            font-size: 150px;
+            background: linear-gradient(135deg, #2d1b69, #4c1d95);
+            border-radius: 12px;
+            margin-bottom: 16px;
+            position: relative;
+            overflow: hidden
+        }
+
+        .d-main::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(168, 85, 247, .12), transparent 70%)
+        }
+
+        .thumbs {
+            display: flex;
+            gap: 10px
+        }
+
+        .thumb {
+            flex: 1;
+            height: 76px;
+            border-radius: 8px;
+            display: grid;
+            place-items: center;
+            font-size: 30px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all .2s
+        }
+
+        .thumb:hover,
+        .thumb.active {
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, .2)
+        }
+
+        .th1 {
+            background: linear-gradient(135deg, #2d1b69, #4c1d95)
+        }
+
+        .th2 {
+            background: linear-gradient(135deg, #1e3a5f, #1d4ed8)
+        }
+
+        .th3 {
+            background: linear-gradient(135deg, #064e3b, #059669)
+        }
+
+        .th4 {
+            background: linear-gradient(135deg, #78350f, #d97706)
+        }
+
+        .detail-info h1 {
+            font-size: 26px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 12px
+        }
+
+        .d-meta {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            flex-wrap: wrap
+        }
+
+        .in-stock {
+            color: #22c55e;
+            font-weight: 700;
+            background: rgba(34, 197, 94, .1);
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            border: 1px solid rgba(34, 197, 94, .2)
+        }
+
+        .d-price {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 6px;
+            flex-wrap: wrap
+        }
+
+        .dp-now {
+            font-size: 30px;
+            font-weight: 900;
+            color: #fff
+        }
+
+        .dp-was {
+            font-size: 16px;
+            color: var(--dim);
+            text-decoration: line-through
+        }
+
+        .dp-off {
+            font-size: 14px;
+            font-weight: 700;
+            color: #22c55e;
+            background: rgba(34, 197, 94, .1);
+            padding: 3px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(34, 197, 94, .2)
+        }
+
+        .d-tax {
+            font-size: 12px;
+            color: var(--dim);
+            margin-bottom: 20px
+        }
+
+        .feat-list {
+            margin-bottom: 22px;
+            background: var(--bg4);
+            border-radius: 10px;
+            padding: 14px
+        }
+
+        .feat-list li {
+            padding: 6px 0 6px 22px;
+            position: relative;
+            font-size: 14px;
+            color: var(--text);
+            border-bottom: 1px solid var(--border)
+        }
+
+        .feat-list li:last-child {
+            border-bottom: none
+        }
+
+        .feat-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #22c55e;
+            font-weight: 800
+        }
+
+        .qty-row {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 20px
+        }
+
+        .qty-lbl {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text)
+        }
+
+        .qty-ctrl {
+            display: flex;
+            align-items: center;
+            border: 1.5px solid var(--border2);
+            border-radius: 999px;
+            overflow: hidden
+        }
+
+        .qty-ctrl button {
+            width: 38px;
+            height: 38px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #a855f7;
+            transition: background .15s
+        }
+
+        .qty-ctrl button:hover {
+            background: rgba(124, 58, 237, .18)
+        }
+
+        .qty-ctrl input {
+            width: 48px;
+            text-align: center;
+            border: none;
+            background: transparent;
+            font-weight: 700;
+            font-size: 16px;
+            color: #fff
+        }
+
+        .qty-ctrl input:focus {
+            outline: none
+        }
+
+        .d-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap
+        }
+
+        .d-actions .btn {
+            flex: 1;
+            min-width: 160px
+        }
+
+        /* ===== CART ===== */
+        .cart-layout {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 24px;
+            padding-top: 10px;
+            align-items: start
+        }
+
+        .cart-box {
+            background: var(--card);
+            border: 1px solid var(--border2);
+            border-radius: 16px;
+            overflow: hidden
+        }
+
+        .cart-hd {
+            padding: 18px 22px;
+            border-bottom: 1px solid var(--border);
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff
+        }
+
+        .cart-row {
+            display: grid;
+            grid-template-columns: 76px 1fr auto auto auto;
+            gap: 16px;
+            align-items: center;
+            padding: 16px 22px;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .cart-row:last-child {
+            border-bottom: none
+        }
+
+        .ci-img {
+            width: 76px;
+            height: 76px;
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            font-size: 36px
+        }
+
+        .ci-name {
+            font-weight: 600;
+            font-size: 15px;
+            color: #fff
+        }
+
+        .ci-sub {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 2px
+        }
+
+        .ci-price {
+            font-weight: 800;
+            font-size: 16px;
+            color: #fff;
+            white-space: nowrap
+        }
+
+        .ci-del {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: grid;
+            place-items: center;
+            font-size: 16px;
+            color: var(--dim);
+            transition: all .18s
+        }
+
+        .ci-del:hover {
+            background: rgba(239, 68, 68, .15);
+            color: #ef4444
+        }
+
+        .sum-box {
+            background: var(--card);
+            border: 1px solid var(--border2);
+            border-radius: 16px;
+            padding: 22px;
+            position: sticky;
+            top: 76px
+        }
+
+        .sum-box h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .sum-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 14px;
+            color: var(--text)
+        }
+
+        .sum-row.disc {
+            color: #22c55e;
+            font-weight: 600
+        }
+
+        .sum-row.tot {
+            border-top: 1px solid var(--border);
+            margin-top: 6px;
+            padding-top: 14px;
+            font-size: 17px;
+            font-weight: 800;
+            color: #fff
+        }
+
+        .sum-box .btn {
+            margin-top: 16px
+        }
+    </style>
+    <style>
+        /* ===== CHECKOUT STEPS ===== */
+        .steps {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 24px 0 8px
+        }
+
+        .step-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-shrink: 0;
+            z-index: 2
+        }
+
+        .step-conn {
+            flex: 1;
+            height: 2px;
+            background: var(--border2);
+            margin: 18px 6px 0;
+            border-radius: 999px;
+            transition: background .25s
+        }
+
+        .step-conn.done {
+            background: linear-gradient(90deg, #7c3aed, #a855f7)
+        }
+
+        .step-circ {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-weight: 700;
+            font-size: 15px;
+            border: 2px solid var(--border2);
+            color: var(--muted);
+            background: var(--card);
+            transition: all .25s
+        }
+
+        .step-item.active .step-circ {
+            border-color: #7c3aed;
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            color: #fff;
+            box-shadow: 0 0 16px rgba(124, 58, 237, .4)
+        }
+
+        .step-item.done .step-circ {
+            border-color: #22c55e;
+            background: linear-gradient(135deg, #059669, #22c55e);
+            color: #fff
+        }
+
+        .step-lbl {
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 7px;
+            white-space: nowrap;
+            color: var(--muted)
+        }
+
+        .step-item.active .step-lbl {
+            color: #a855f7
+        }
+
+        .step-item.done .step-lbl {
+            color: #22c55e
+        }
+
+        .ck-layout {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 24px;
+            padding-top: 12px;
+            align-items: start
+        }
+
+        .sec-card {
+            background: var(--card);
+            border: 1px solid var(--border2);
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 18px
+        }
+
+        .sec-card h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 16px
+        }
+
+        .addr-card {
+            border: 1.5px solid var(--border2);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all .2s;
+            position: relative
+        }
+
+        .addr-card:hover {
+            border-color: #7c3aed
+        }
+
+        .addr-card.sel {
+            border-color: #7c3aed;
+            background: rgba(124, 58, 237, .08);
+            box-shadow: 0 0 16px rgba(124, 58, 237, .15)
+        }
+
+        .addr-hd {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px
+        }
+
+        .addr-tag {
+            font-size: 12px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 6px;
+            background: rgba(124, 58, 237, .15);
+            color: #a855f7;
+            border: 1px solid rgba(124, 58, 237, .2)
+        }
+
+        .addr-edit {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #a855f7;
+            cursor: pointer
+        }
+
+        .addr-card p {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.5
+        }
+
+        .add-addr {
+            width: 100%;
+            padding: 14px;
+            border: 1.5px dashed var(--border2);
+            border-radius: 12px;
+            color: #a855f7;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all .2s
+        }
+
+        .add-addr:hover {
+            border-color: #7c3aed;
+            background: rgba(124, 58, 237, .08)
+        }
+
+        .coupon-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 4px
+        }
+
+        .coupon-row input {
+            flex: 1;
+            padding: 10px 14px;
+            background: var(--bg3);
+            border: 1px solid var(--border2);
+            border-radius: 8px;
+            font-size: 14px;
+            color: var(--text);
+            transition: all .2s
+        }
+
+        .coupon-row input:focus {
+            outline: none;
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, .15)
+        }
+
+        .coupon-row input::placeholder {
+            color: var(--dim)
+        }
+
+        .ck-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 4px;
+            flex-wrap: wrap;
+            gap: 12px
+        }
+
+        /* ===== PAYMENT ===== */
+        .pay-opt {
+            border: 1.5px solid var(--border2);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            transition: all .2s
+        }
+
+        .pay-opt:hover {
+            border-color: #7c3aed
+        }
+
+        .pay-opt.sel {
+            border-color: #7c3aed;
+            background: rgba(124, 58, 237, .08);
+            box-shadow: 0 0 16px rgba(124, 58, 237, .12)
+        }
+
+        .pay-radio {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border2);
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            transition: all .18s
+        }
+
+        .pay-opt.sel .pay-radio {
+            border-color: #7c3aed
+        }
+
+        .pay-opt.sel .pay-radio::after {
+            content: '';
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed, #a855f7)
+        }
+
+        .pay-info h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 2px
+        }
+
+        .pay-info p {
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        .pay-em {
+            font-size: 22px;
+            flex-shrink: 0
+        }
+
+        /* ===== ORDER CONFIRMATION ===== */
+        .conf-wrap {
+            max-width: 520px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 52px 24px 20px
+        }
+
+        .conf-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #059669, #22c55e);
+            display: grid;
+            place-items: center;
+            margin: 0 auto 24px;
+            font-size: 50px;
+            color: #fff;
+            box-shadow: 0 0 40px rgba(34, 197, 94, .4);
+            animation: pop .5s cubic-bezier(.34, 1.56, .64, 1)
+        }
+
+        @keyframes pop {
+            0% {
+                transform: scale(0)
+            }
+
+            100% {
+                transform: scale(1)
+            }
+        }
+
+        .conf-wrap h1 {
+            font-size: 28px;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 10px
+        }
+
+        .conf-sub {
+            font-size: 16px;
+            color: var(--muted);
+            margin-bottom: 6px
+        }
+
+        .conf-id {
+            font-size: 17px;
+            font-weight: 700;
+            color: #a855f7;
+            margin-bottom: 28px
+        }
+
+        .conf-bag {
+            font-size: 60px;
+            margin: 20px 0 6px;
+            animation: bounce 2s ease-in-out infinite
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-8px)
+            }
+        }
+
+        .conf-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap
+        }
+
+        .conf-actions .btn {
+            min-width: 170px
+        }
+
+        /* ===== ORDERS ===== */
+        .order-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 22px;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap
+        }
+
+        .otab {
+            padding: 11px 16px;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--muted);
+            border-bottom: 2px solid transparent;
+            transition: all .18s;
+            cursor: pointer
+        }
+
+        .otab:hover {
+            color: #a855f7
+        }
+
+        .otab.active {
+            color: #a855f7;
+            border-color: #7c3aed
+        }
+
+        .order-card {
+            background: var(--card);
+            border: 1px solid var(--border2);
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 18px
+        }
+
+        .oc-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 10px
+        }
+
+        .oc-id {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff
+        }
+
+        .oc-date {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 3px
+        }
+
+        .oc-amt {
+            font-size: 19px;
+            font-weight: 800;
+            color: #fff;
+            text-align: right
+        }
+
+        .stat-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 5px
+        }
+
+        .stat-ship {
+            background: rgba(34, 197, 94, .12);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, .2)
+        }
+
+        .stat-proc {
+            background: rgba(245, 158, 11, .1);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, .2)
+        }
+
+        .stat-del {
+            background: rgba(34, 197, 94, .12);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, .2)
+        }
+
+        .stat-can {
+            background: rgba(239, 68, 68, .1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, .2)
+        }
+
+        .tracker {
+            margin: 20px 0 10px
+        }
+
+        .tracker-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            position: relative
+        }
+
+        .tr-line {
+            position: absolute;
+            top: 15px;
+            left: 12.5%;
+            right: 12.5%;
+            height: 2px;
+            background: var(--border2);
+            z-0
+        }
+
+        .tr-fill {
+            position: absolute;
+            top: 15px;
+            left: 12.5%;
+            width: 62.5%;
+            height: 2px;
+            background: linear-gradient(90deg, #7c3aed, #a855f7);
+            z-index: 1
+        }
+
+        .tracker-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2
+        }
+
+        .tr-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-size: 13px;
+            font-weight: 700;
+            background: var(--bg3);
+            border: 2px solid var(--border2);
+            color: var(--dim);
+            margin-bottom: 7px;
+            transition: all .25s
+        }
+
+        .tracker-item.done .tr-dot {
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            border-color: #7c3aed;
+            color: #fff
+        }
+
+        .tracker-item.cur .tr-dot {
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            border-color: #7c3aed;
+            color: #fff;
+            box-shadow: 0 0 0 5px rgba(124, 58, 237, .18)
+        }
+
+        .tr-lbl {
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+            color: var(--text)
+        }
+
+        .tr-date {
+            font-size: 11px;
+            color: var(--dim)
+        }
+
+        .tr-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px
+        }
+
+        /* ===== AI ASSISTANT ===== */
+        .ai-wrap {
+            max-width: 820px;
+            margin: 0 auto;
+            padding-top: 18px
+        }
+
+        .ai-head {
+            text-align: center;
+            margin-bottom: 22px
+        }
+
+        .ai-head h1 {
+            font-size: 28px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 6px
+        }
+
+        .ai-head p {
+            color: var(--muted);
+            font-size: 15px
+        }
+
+        .ai-chips {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px
+        }
+
+        .chip {
+            padding: 8px 16px;
+            border-radius: 999px;
+            background: var(--card);
+            border: 1px solid var(--border2);
+            font-size: 13px;
+            color: var(--text);
+            cursor: pointer;
+            transition: all .18s
+        }
+
+        .chip:hover {
+            border-color: #7c3aed;
+            color: #a855f7;
+            background: rgba(124, 58, 237, .1)
+        }
+
+        .ai-chat {
+            background: var(--card);
+            border: 1px solid var(--border2);
+            border-radius: 16px;
+            padding: 22px;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 14px;
+            max-height: 500px;
+            overflow-y: auto
+        }
+
+        .ai-msg {
+            display: flex;
+            gap: 10px;
+            max-width: 85%
+        }
+
+        .ai-msg.user {
+            margin-left: auto;
+            flex-direction: row-reverse
+        }
+
+        .ai-av {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            font-size: 17px
+        }
+
+        .ai-av.bot {
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            color: #fff
+        }
+
+        .ai-av.user {
+            background: var(--bg4);
+            color: var(--text)
+        }
+
+        .ai-bubble {
+            background: var(--bg4);
+            padding: 11px 15px;
+            border-radius: 14px 14px 14px 4px;
+            font-size: 14px;
+            line-height: 1.55;
+            color: var(--text)
+        }
+
+        .ai-msg.user .ai-bubble {
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            color: #fff;
+            border-radius: 14px 14px 4px 14px
+        }
+
+        .ai-prod-card {
+            background: var(--bg3);
+            border: 1px solid var(--border2);
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 10px;
+            display: flex;
+            gap: 12px;
+            align-items: center
+        }
+
+        .ai-pi {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            display: grid;
+            place-items: center;
+            font-size: 28px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, #312e81, #4c1d95)
+        }
+
+        .ai-pi-info h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 2px
+        }
+
+        .ai-pi-info .meta {
+            font-size: 11px;
+            color: var(--muted);
+            margin-bottom: 4px
+        }
+
+        .ai-pi-info .price {
+            font-weight: 800;
+            font-size: 15px;
+            color: #fff
+        }
+
+        .ai-input-row {
+            display: flex;
+            gap: 10px;
+            background: var(--card);
+            border: 1px solid var(--border2);
+            border-radius: 999px;
+            padding: 5px 5px 5px 18px
+        }
+
+        .ai-input-row input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            color: var(--text)
+        }
+
+        .ai-input-row input:focus {
+            outline: none
+        }
+
+        .ai-input-row input::placeholder {
+            color: var(--dim)
+        }
+
+        .ai-send {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            color: #fff;
+            display: grid;
+            place-items: center;
+            font-size: 17px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(124, 58, 237, .4);
+            transition: all .18s
+        }
+
+        .ai-send:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 18px rgba(124, 58, 237, .5)
+        }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            background: linear-gradient(135deg, #1a1535, #221e3d);
+            color: #e2e8f0;
+            padding: 13px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: var(--sh2);
+            border: 1px solid var(--border2);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all .3s;
+            z-index: 9999
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--bg2);
+            border-top: 1px solid var(--border);
+            padding: 32px 0
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 17px;
+            color: #fff
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap
+        }
+
+        .footer-links a {
+            font-size: 14px;
+            color: var(--muted);
+            cursor: pointer;
+            transition: color .18s
+        }
+
+        .footer-links a:hover {
+            color: #a855f7
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 10px
+        }
+
+        .soc-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: var(--bg4);
+            border: 1px solid var(--border2);
+            display: grid;
+            place-items: center;
+            font-size: 16px;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all .18s
+        }
+
+        .soc-btn:hover {
+            border-color: #7c3aed;
+            color: #a855f7
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media(max-width:980px) {
+
+            .nav-search,
+            .nav-links {
+                display: none
+            }
+
+            .nav-mobile-toggle {
+                display: grid
+            }
+
+            .cat-grid {
+                grid-template-columns: repeat(3, 1fr)
+            }
+
+            .prod-grid,
+            .prod-grid-4 {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .list-layout {
+                grid-template-columns: 1fr
+            }
+
+            .sidebar {
+                position: static
+            }
+
+            .detail-layout,
+            .cart-layout,
+            .ck-layout {
+                grid-template-columns: 1fr;
+                gap: 20px
+            }
+
+            .sum-box {
+                position: static
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 36px 28px
+            }
+
+            .hero-ring {
+                width: 200px;
+                height: 200px;
+                font-size: 88px
+            }
+
+            .hero-text h1 {
+                font-size: 30px
+            }
+        }
+
+        @media(max-width:560px) {
+            .cat-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .prod-grid,
+            .prod-grid-4 {
+                grid-template-columns: 1fr
+            }
+
+            .cart-row {
+                grid-template-columns: 64px 1fr auto
+            }
+
+            .hero-text h1 {
+                font-size: 24px
+            }
+
+            .container {
+                padding: 0 14px
+            }
+
+            .steps {
+                padding: 16px 0 6px
+            }
+
+            .step-lbl {
+                font-size: 11px
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar">
+        <div class="container nav-inner">
+            <div class="logo" onclick="go('home')">
+                <div class="logo-box">N</div>
+                <span>NovaTech</span>
+            </div>
+            <div class="nav-links">
+                <span class="nav-link active" data-page="home" onclick="go('home')">Home</span>
+                <span class="nav-link" data-page="products" onclick="go('products')">Products</span>
+                <span class="nav-link" data-page="orders" onclick="go('orders')">Orders</span>
+                <span class="nav-link" data-page="assistant" onclick="go('assistant')">AI Assistant</span>
+            </div>
+            <div class="nav-search">
+                <span class="search-ic">🔍</span>
+                <input type="text" placeholder="Search for products, brands..." id="searchInput"
+                    onkeydown="if(event.key==='Enter')searchGo()">
+            </div>
+            <div class="nav-actions">
+                <button class="icon-btn" title="Search" onclick="go('products')">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.35-4.35" />
+                    </svg>
+                </button>
+                <button class="icon-btn" title="Cart" onclick="go('cart')">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <circle cx="9" cy="21" r="1" />
+                        <circle cx="20" cy="21" r="1" />
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                    </svg>
+                    <span class="cart-badge" id="cartBadge">2</span>
+                </button>
+                <button class="icon-btn" title="Profile">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <circle cx="12" cy="8" r="4" />
+                        <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
+                    </svg>
+                </button>
+            </div>
+            <button class="icon-btn nav-mobile-toggle" onclick="toggleMobile()" title="Menu">
+                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <line x1="3" y1="6" x2="21" y2="6" />
+                    <line x1="3" y1="12" x2="21" y2="12" />
+                    <line x1="3" y1="18" x2="21" y2="18" />
+                </svg>
+            </button>
+        </div>
+    </nav>
+    <div id="mobileMenu"
+        style="display:none;position:fixed;top:64px;left:0;right:0;background:#13102a;border-bottom:1px solid #2d2850;z-index:198;padding:12px 24px">
+        <span onclick="go('home')"
+            style="display:block;padding:12px 0;cursor:pointer;border-bottom:1px solid #2d2850;color:#e2e8f0;font-weight:600">Home</span>
+        <span onclick="go('products')"
+            style="display:block;padding:12px 0;cursor:pointer;border-bottom:1px solid #2d2850;color:#e2e8f0;font-weight:600">Products</span>
+        <span onclick="go('orders')"
+            style="display:block;padding:12px 0;cursor:pointer;border-bottom:1px solid #2d2850;color:#e2e8f0;font-weight:600">Orders</span>
+        <span onclick="go('assistant')"
+            style="display:block;padding:12px 0;cursor:pointer;color:#e2e8f0;font-weight:600">AI Assistant</span>
+    </div>
+
+    <div class="container">
+
+        <!-- ===== PAGE 1: HOME ===== -->
+        <section class="page active" id="page-home">
+            <!-- HERO -->
+            <div class="hero">
+                <div class="hero-text">
+                    <h1>Welcome to<br><span>NovaTech B2C Store</span></h1>
+                    <p>Shop smarter with AI recommendations,<br>best prices and fast delivery!</p>
+                    <button class="hero-btn btn btn-lg" onclick="go('products')">Shop Now →</button>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-ring"
+                        style="background:radial-gradient(circle,rgba(168,85,247,.22),rgba(79,46,220,.1));border:2px solid rgba(168,85,247,.4);box-shadow:0 0 80px rgba(168,85,247,.55),0 20px 60px rgba(0,0,0,.55)">
+                        <img src="headphones.png" alt="Wireless Headphones" style="width:240px;height:240px;object-fit:contain;
+                                   filter:drop-shadow(0 6px 28px rgba(168,85,247,.6)) brightness(1.05);
+                                   transition:transform .35s ease;border-radius:50%"
+                            onmouseover="this.style.transform='scale(1.08) rotate(-5deg)'"
+                            onmouseout="this.style.transform='scale(1) rotate(0deg)'"
+                            onerror="this.outerHTML='<span style=\'font-size:120px\'>🎧</span>'">
+                    </div>
+                </div>
+                <div class="hero-dots">
+                    <span class="active" onclick="heroDot(this)"></span>
+                    <span onclick="heroDot(this)"></span>
+                    <span onclick="heroDot(this)"></span>
+                </div>
+            </div>
+
+            <!-- CATEGORIES -->
+            <div class="section">
+                <div class="section-head">
+                    <h2>Shop by Category</h2>
+                </div>
+                <div class="cat-grid">
+                    <div class="cat-card active-cat" onclick="go('products')">
+                        <div class="cat-emoji cat-em1">💻</div><span>Electronics</span>
+                    </div>
+                    <div class="cat-card" onclick="go('products')">
+                        <div class="cat-emoji cat-em2">👗</div><span>Fashion</span>
+                    </div>
+                    <div class="cat-card" onclick="go('products')">
+                        <div class="cat-emoji cat-em3">🍳</div><span>Home &amp; Kitchen</span>
+                    </div>
+                    <div class="cat-card" onclick="go('products')">
+                        <div class="cat-emoji cat-em4">📚</div><span>Books</span>
+                    </div>
+                    <div class="cat-card" onclick="go('products')">
+                        <div class="cat-emoji cat-em5">⚽</div><span>Sports</span>
+                    </div>
+                    <div class="cat-card" onclick="go('products')">
+                        <div class="cat-emoji cat-em6">✨</div><span>More</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TRENDING -->
+            <div class="section">
+                <div class="section-head">
+                    <h2>Trending Products</h2>
+                    <span class="btn-link" onclick="go('products')">View All →</span>
+                </div>
+                <div class="prod-grid">
+                    <div class="prod-card">
+                        <div class="prod-img pi-h">
+                            <span class="prod-badge">17% OFF</span>
+                            <button class="wish-btn" onclick="toggleWish(this)">♡</button>
+                            <span class="prod-emoji">🎧</span>
+                        </div>
+                        <div class="prod-body">
+                            <div class="prod-cat">Electronics</div>
+                            <div class="prod-name" onclick="go('details')">NovaTech Wireless Headphones</div>
+                            <div class="prod-rating"><span class="stars">★★★★★</span> 4.5 <span>(3,420 reviews)</span>
+                            </div>
+                            <div class="prod-price">
+                                <span class="p-now">₹4,999</span><span class="p-was">₹5,999</span><span
+                                    class="p-off">17% off</span>
+                            </div>
+                            <button class="btn btn-primary btn-full"
+                                onclick="addCart('headphones','NovaTech Wireless Headphones',4999)">🛒 Add to
+                                Cart</button>
+                        </div>
+                    </div>
+                    <div class="prod-card">
+                        <div class="prod-img pi-l">
+                            <span class="prod-badge red-b">25% OFF</span>
+                            <button class="wish-btn" onclick="toggleWish(this)">♡</button>
+                            <span class="prod-emoji">💻</span>
+                        </div>
+                        <div class="prod-body">
+                            <div class="prod-cat">Electronics</div>
+                            <div class="prod-name" onclick="go('details')">Laptop Pro 14</div>
+                            <div class="prod-rating"><span class="stars">★★★★★</span> 4.6 <span>(1,540 reviews)</span>
+                            </div>
+                            <div class="prod-price">
+                                <span class="p-now">₹72,990</span><span class="p-was">₹1,09,999</span><span
+                                    class="p-off">25% off</span>
+                            </div>
+                            <button class="btn btn-primary btn-full"
+                                onclick="addCart('laptop','Laptop Pro 14',72990)">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="prod-card">
+                        <div class="prod-img pi-w">
+                            <span class="prod-badge">12% OFF</span>
+                            <button class="wish-btn" onclick="toggleWish(this)">♡</button>
+                            <span class="prod-emoji">⌚</span>
+                        </div>
+                        <div class="prod-body">
+                            <div class="prod-cat">Electronics</div>
+                            <div class="prod-name" onclick="go('details')">Smart Watch Pro</div>
+                            <div class="prod-rating"><span class="stars">★★★★★</span> 4.5 <span>(4,200 reviews)</span>
+                            </div>
+                            <div class="prod-price">
+                                <span class="p-now">₹3,499</span><span class="p-was">₹3,999</span><span
+                                    class="p-off">12% off</span>
+                            </div>
+                            <button class="btn btn-primary btn-full"
+                                onclick="addCart('watch','Smart Watch Pro',3499)">🛒 Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PAGE 2: PRODUCTS ===== -->
+        <section class="page" id="page-products">
+            <div class="breadcrumb">
+                <span onclick="go('home')"><a>Home</a></span><span class="sep">/</span>
+                <span class="cur">Electronics</span>
+            </div>
+            <div class="list-top">
+                <h2>Electronics <span>(18 products)</span></h2>
+                <select class="sort-sel" onchange="showToast('Sorted by '+this.value)">
+                    <option>Sort by: Popularity</option>
+                    <option>Price: Low to High</option>
+                    <option>Price: High to Low</option>
+                    <option>Customer Rating</option>
+                    <option>Newest First</option>
+                </select>
+            </div>
+            <div class="list-layout">
+                <aside class="sidebar">
+                    <div class="sb-head">
+                        <h3>Filters</h3>
+                        <a onclick="clearFilters()">Clear All</a>
+                    </div>
+                    <div class="filter-group">
+                        <div class="fg-title">Price Range</div>
+                        <div class="range-vals"><span>₹0</span><b id="priceVal">₹50,000</b></div>
+                        <input type="range" min="0" max="200000" value="50000" id="priceRange"
+                            oninput="updatePrice(this)">
+                    </div>
+                    <div class="filter-group">
+                        <div class="fg-title">Category</div>
+                        <label class="ck-row"><span class="lft"><input type="checkbox" checked> Electronics</span><span
+                                class="ck-cnt">9</span></label>
+                        <label class="ck-row"><span class="lft"><input type="checkbox"> Gaming</span><span
+                                class="ck-cnt">2</span></label>
+                        <label class="ck-row"><span class="lft"><input type="checkbox"> Audio</span><span
+                                class="ck-cnt">3</span></label>
+                        <label class="ck-row"><span class="lft"><input type="checkbox"> Accessories</span><span
+                                class="ck-cnt">3</span></label>
+                        <label class="ck-row"><span class="lft"><input type="checkbox"> Smart Home</span><span
+                                class="ck-cnt">1</span></label>
+                        <label class="ck-row"><span class="lft"><input type="checkbox"> Networking</span><span
+                                class="ck-cnt">1</span></label>
+                        <label class="ck-row"><span class="lft"><input type="checkbox"> Gadgets</span><span
+                                class="ck-cnt">1</span></label>
+                    </div>
+                    <div class="filter-group">
+                        <div class="fg-title">Brand</div>
+                        <label class="ck-row"><span class="lft"><input type="checkbox"> Apple</span><span
+                                class="ck-cnt">4</span></label>
+                        <label class="ck-row"><span class="lft"><input type="checkbox"> Samsung</span><span
+                                class="ck-cnt">3</span></label>
+                        <label class="ck-row"><span class="lft"><input type="checkbox"> Sony</span><span
+                                class="ck-cnt">2</span></label>
+                        <label class="ck-row"><span class="lft"><input type="checkbox"> boAt</span><span
+                                class="ck-cnt">2</span></label>
+                        <label class="ck-row"><span class="lft"><input type="checkbox"> NovaTech</span><span
+                                class="ck-cnt">3</span></label>
+                        <label class="ck-row"><span class="lft"><input type="checkbox"> JBL</span><span
+                                class="ck-cnt">2</span></label>
+                        <label class="ck-row"><span class="lft"><input type="checkbox"> Logitech</span><span
+                                class="ck-cnt">2</span></label>
+                    </div>
+                    <div class="filter-group">
+                        <div class="fg-title">Rating</div>
+                        <label class="ck-row"><span class="lft"><input type="checkbox"> <span
+                                    style="color:#f59e0b">★★★★★</span> 4★ &amp; above</span></label>
+                        <label class="ck-row"><span class="lft"><input type="checkbox"> <span
+                                    style="color:#f59e0b">★★★★</span> 3★ &amp; above</span></label>
+                    </div>
+                </aside>
+                <div class="prod-grid" id="prodGrid">
+                    <!-- 1 -->
+                    <div class="prod-card">
+                        <div class="prod-img pi-l">
+                            <span class="prod-badge red-b">25% OFF</span>
+                            <button class="wish-btn" onclick="toggleWish(this)">♡</button>
+                            <span class="prod-emoji">💻</span>
+                        </div>
+                        <div class="prod-body">
+                            <div class="prod-cat">Electronics</div>
+                            <div class="prod-name" onclick="go('details')">Laptop Pro 14</div>
+                            <div class="prod-rating"><span class="stars">★★★★★</span> 4.6 <span>(1,540)</span></div>
+                            <div class="prod-price"><span class="p-now">₹72,990</span><span
+                                    class="p-was">₹1,09,999</span><span class="p-off">25% off</span></div>
+                            <button class="btn btn-primary btn-full"
+                                onclick="addCart('laptop','Laptop Pro 14',72990)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <!-- 2 -->
+                    <div class="prod-card">
+                        <div class="prod-img pi-h">
+                            <span class="prod-badge">17% OFF</span>
+                            <button class="wish-btn" onclick="toggleWish(this)">♡</button>
+                            <span class="prod-emoji">🎧</span>
+                        </div>
+                        <div class="prod-body">
+                            <div class="prod-cat">Electronics</div>
+                            <div class="prod-name" onclick="go('details')">NovaTech Wireless Headphones</div>
+                            <div class="prod-rating"><span class="stars">★★★★★</span> 4.5 <span>(3,420)</span></div>
+                            <div class="prod-price"><span class="p-now">₹4,999</span><span
+                                    class="p-was">₹5,999</span><span class="p-off">17% off</span></div>
+                            <button class="btn btn-primary btn-full"
+                                onclick="addCart('headphones','NovaTech Wireless Headphones',4999)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <!-- 3 -->
+                    <div class="prod-card">
+                        <div class="prod-img pi-w">
+                            <span class="prod-badge">12% OFF</span>
+                            <button class="wish-btn" onclick="toggleWish(this)">♡</button>
+                            <span class="prod-emoji">⌚</span>
+                        </div>
+                        <div class="prod-body">
+                            <div class="prod-cat">Electronics</div>
+                            <div class="prod-name" onclick="go('details')">Smart Watch Pro</div>
+                            <div class="prod-rating"><span class="stars">★★★★★</span> 4.4 <span>(1,820)</span></div>
+                            <div class="prod-price"><span class="p-now">₹2,499</span><span
+                                    class="p-was">₹2,999</span><span class="p-off">17% off</span></div>
+                            <button class="btn btn-primary btn-full"
+                                onclick="addCart('watch','Smart Watch Pro',2499)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <!-- 4 -->
+                    <div class="prod-card">
+                        <div class="prod-img pi-p">
+                            <span class="prod-badge green-b">NEW</span>
+                            <button class="wish-btn" onclick="toggleWish(this)">♡</button>
+                            <span class="prod-emoji">📱</span>
+                        </div>
+                        <div class="prod-body">
+                            <div class="prod-cat">Electronics</div>
+                            <div class="prod-name" onclick="go('details')">NovaTech Phone X</div>
+                            <div class="prod-rating"><span class="stars">★★★★★</span> 4.7 <span>(892)</span></div>
+                            <div class="prod-price"><span class="p-now">₹24,999</span><span
+                                    class="p-was">₹29,999</span><span class="p-off">17% off</span></div>
+                            <button class="btn btn-primary btn-full"
+                                onclick="addCart('phone','NovaTech Phone X',24999)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <!-- 5 -->
+                    <div class="prod-card">
+                        <div class="prod-img pi-c">
+                            <span class="prod-badge">10% OFF</span>
+                            <button class="wish-btn" onclick="toggleWish(this)">♡</button>
+                            <span class="prod-emoji">📷</span>
+                        </div>
+                        <div class="prod-body">
+                            <div class="prod-cat">Electronics</div>
+                            <div class="prod-name" onclick="go('details')">ProCam DSLR 4K</div>
+                            <div class="prod-rating"><span class="stars">★★★★</span> 4.3 <span>(445)</span></div>
+                            <div class="prod-price"><span class="p-now">₹44,990</span><span
+                                    class="p-was">₹49,999</span><span class="p-off">10% off</span></div>
+                            <button class="btn btn-primary btn-full"
+                                onclick="addCart('camera','ProCam DSLR 4K',44990)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <!-- 6 -->
+                    <div class="prod-card">
+                        <div class="prod-img pi-s">
+                            <span class="prod-badge">20% OFF</span>
+                            <button class="wish-btn" onclick="toggleWish(this)">♡</button>
+                            <span class="prod-emoji">🔊</span>
+                        </div>
+                        <div class="prod-body">
+                            <div class="prod-cat">Electronics</div>
+                            <div class="prod-name" onclick="go('details')">BoomBox Speaker 360°</div>
+                            <div class="prod-rating"><span class="stars">★★★★★</span> 4.5 <span>(2,100)</span></div>
+                            <div class="prod-price"><span class="p-now">₹3,199</span><span
+                                    class="p-was">₹3,999</span><span class="p-off">20% off</span></div>
+                            <button class="btn btn-primary btn-full"
+                                onclick="addCart('speaker','BoomBox Speaker 360°',3199)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <!-- 7 -->
+                    <div class="prod-card">
+                        <div class="prod-img pi-a" style="background:linear-gradient(135deg,#1e1b4b,#3730a3)">
+                            <span class="prod-badge">15% OFF</span>
+                            <button class="wish-btn" onclick="toggleWish(this)">♡</button>
+                            <span class="prod-emoji">💊</span>
+                        </div>
+                        <div class="prod-body">
+                            <div class="prod-cat">Electronics</div>
+                            <div class="prod-name" onclick="go('details')">NovaPad Tablet 10"</div>
+                            <div class="prod-rating"><span class="stars">★★★★★</span> 4.6 <span>(780)</span></div>
+                            <div class="prod-price"><span class="p-now">₹18,499</span><span
+                                    class="p-was">₹21,999</span><span class="p-off">15% off</span></div>
+                            <button class="btn btn-primary btn-full"
+                                onclick="addCart('tablet','NovaPad Tablet 10&quot;',18499)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <!-- 8 -->
+                    <div class="prod-card">
+                        <div class="prod-img" style="background:linear-gradient(135deg,#064e3b,#065f46)">
+                            <span class="prod-badge green-b">NEW</span>
+                            <button class="wish-btn" onclick="toggleWish(this)">♡</button>
+                            <span class="prod-emoji" style="font-size:88px">🖨️</span>
+                        </div>
+                        <div class="prod-body">
+                            <div class="prod-cat">Electronics</div>
+                            <div class="prod-name" onclick="go('details')">LaserJet Pro Printer</div>
+                            <div class="prod-rating"><span class="stars">★★★★</span> 4.2 <span>(320)</span></div>
+                            <div class="prod-price"><span class="p-now">₹8,990</span><span
+                                    class="p-was">₹10,999</span><span class="p-off">18% off</span></div>
+                            <button class="btn btn-primary btn-full"
+                                onclick="addCart('printer','LaserJet Pro Printer',8990)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <!-- 9 -->
+                    <div class="prod-card">
+                        <div class="prod-img" style="background:linear-gradient(135deg,#4a1942,#7e22ce)">
+                            <span class="prod-badge red-b">30% OFF</span>
+                            <button class="wish-btn" onclick="toggleWish(this)">♡</button>
+                            <span class="prod-emoji" style="font-size:88px">🎮</span>
+                        </div>
+                        <div class="prod-body">
+                            <div class="prod-cat">Gaming</div>
+                            <div class="prod-name" onclick="go('details')">GamePad Pro X Controller</div>
+                            <div class="prod-rating"><span class="stars">★★★★★</span> 4.8 <span>(2,560)</span></div>
+                            <div class="prod-price"><span class="p-now">₹3,499</span><span
+                                    class="p-was">₹4,999</span><span class="p-off">30% off</span></div>
+                            <button class="btn btn-primary btn-full"
+                                onclick="addCart('gamepad','GamePad Pro X',3499)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <!-- 10 -->
+                    <div class="prod-card">
+                        <div class="prod-img" style="background:linear-gradient(135deg,#172554,#1e40af)">
+                            <span class="prod-badge">22% OFF</span>
+                            <button class="wish-btn" onclick="toggleWish(this)">♡</button>
+                            <span class="prod-emoji" style="font-size:88px">🖥️</span>
+                        </div>
+                        <div class="prod-body">
+                            <div class="prod-cat">Electronics</div>
+                            <div class="prod-name" onclick="go('details')">UltraView 27" 4K Monitor</div>
+                            <div class="prod-rating"><span class="stars">★★★★★</span> 4.7 <span>(1,230)</span></div>
+                            <div class="prod-price"><span class="p-now">₹28,990</span><span
+                                    class="p-was">₹36,999</span><span class="p-off">22% off</span></div>
+                            <button class="btn btn-primary btn-full"
+                                onclick="addCart('monitor','UltraView 27&quot; Monitor',28990)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <!-- 11 -->
+                    <div class="prod-card">
+                        <div class="prod-img" style="background:linear-gradient(135deg,#431407,#b45309)">
+                            <span class="prod-badge">18% OFF</span>
+                            <button class="wish-btn" onclick="toggleWish(this)">♡</button>
+                            <span class="prod-emoji" style="font-size:88px">⌨️</span>
+                        </div>
+                        <div class="prod-body">
+                            <div class="prod-cat">Accessories</div>
+                            <div class="prod-name" onclick="go('details')">MechKey RGB Keyboard</div>
+                            <div class="prod-rating"><span class="stars">★★★★★</span> 4.6 <span>(987)</span></div>
+                            <div class="prod-price"><span class="p-now">₹4,290</span><span
+                                    class="p-was">₹5,249</span><span class="p-off">18% off</span></div>
+                            <button class="btn btn-primary btn-full"
+                                onclick="addCart('keyboard','MechKey RGB Keyboard',4290)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <!-- 12 -->
+                    <div class="prod-card">
+                        <div class="prod-img" style="background:linear-gradient(135deg,#0c4a6e,#0369a1)">
+                            <span class="prod-badge green-b">NEW</span>
+                            <button class="wish-btn" onclick="toggleWish(this)">♡</button>
+                            <span class="prod-emoji" style="font-size:88px">🖱️</span>
+                        </div>
+                        <div class="prod-body">
+                            <div class="prod-cat">Accessories</div>
+                            <div class="prod-name" onclick="go('details')">SilentGlide Wireless Mouse</div>
+                            <div class="prod-rating"><span class="stars">★★★★</span> 4.4 <span>(654)</span></div>
+                            <div class="prod-price"><span class="p-now">₹1,499</span><span
+                                    class="p-was">₹1,999</span><span class="p-off">25% off</span></div>
+                            <button class="btn btn-primary btn-full"
+                                onclick="addCart('mouse','SilentGlide Wireless Mouse',1499)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <!-- 13 -->
+                    <div class="prod-card">
+                        <div class="prod-img" style="background:linear-gradient(135deg,#3b0764,#7e22ce)">
+                            <span class="prod-badge">14% OFF</span>
+                            <button class="wish-btn" onclick="toggleWish(this)">♡</button>
+                            <span class="prod-emoji" style="font-size:88px">🎙️</span>
+                        </div>
+                        <div class="prod-body">
+                            <div class="prod-cat">Audio</div>
+                            <div class="prod-name" onclick="go('details')">ProMic USB Studio Microphone</div>
+                            <div class="prod-rating"><span class="stars">★★★★★</span> 4.7 <span>(430)</span></div>
+                            <div class="prod-price"><span class="p-now">₹5,799</span><span
+                                    class="p-was">₹6,749</span><span class="p-off">14% off</span></div>
+                            <button class="btn btn-primary btn-full"
+                                onclick="addCart('mic','ProMic USB Microphone',5799)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <!-- 14 -->
+                    <div class="prod-card">
+                        <div class="prod-img" style="background:linear-gradient(135deg,#1a2e05,#3f6212)">
+                            <span class="prod-badge red-b">35% OFF</span>
+                            <button class="wish-btn" onclick="toggleWish(this)">♡</button>
+                            <span class="prod-emoji" style="font-size:88px">🔋</span>
+                        </div>
+                        <div class="prod-body">
+                            <div class="prod-cat">Accessories</div>
+                            <div class="prod-name" onclick="go('details')">PowerBank 20000mAh Fast</div>
+                            <div class="prod-rating"><span class="stars">★★★★★</span> 4.5 <span>(3,200)</span></div>
+                            <div class="prod-price"><span class="p-now">₹1,299</span><span
+                                    class="p-was">₹1,999</span><span class="p-off">35% off</span></div>
+                            <button class="btn btn-primary btn-full"
+                                onclick="addCart('powerbank','PowerBank 20000mAh',1299)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <!-- 15 -->
+                    <div class="prod-card">
+                        <div class="prod-img" style="background:linear-gradient(135deg,#500724,#9f1239)">
+                            <span class="prod-badge">10% OFF</span>
+                            <button class="wish-btn" onclick="toggleWish(this)">♡</button>
+                            <span class="prod-emoji" style="font-size:88px">🎵</span>
+                        </div>
+                        <div class="prod-body">
+                            <div class="prod-cat">Audio</div>
+                            <div class="prod-name" onclick="go('details')">TrueSound Earbuds Pro</div>
+                            <div class="prod-rating"><span class="stars">★★★★★</span> 4.6 <span>(5,100)</span></div>
+                            <div class="prod-price"><span class="p-now">₹2,249</span><span
+                                    class="p-was">₹2,499</span><span class="p-off">10% off</span></div>
+                            <button class="btn btn-primary btn-full"
+                                onclick="addCart('earbuds','TrueSound Earbuds Pro',2249)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <!-- 16 -->
+                    <div class="prod-card">
+                        <div class="prod-img" style="background:linear-gradient(135deg,#0f172a,#1e3a5f)">
+                            <span class="prod-badge green-b">NEW</span>
+                            <button class="wish-btn" onclick="toggleWish(this)">♡</button>
+                            <span class="prod-emoji" style="font-size:88px">📡</span>
+                        </div>
+                        <div class="prod-body">
+                            <div class="prod-cat">Networking</div>
+                            <div class="prod-name" onclick="go('details')">WiFi 6 Router Mesh Pro</div>
+                            <div class="prod-rating"><span class="stars">★★★★</span> 4.3 <span>(560)</span></div>
+                            <div class="prod-price"><span class="p-now">₹6,499</span><span
+                                    class="p-was">₹7,999</span><span class="p-off">19% off</span></div>
+                            <button class="btn btn-primary btn-full"
+                                onclick="addCart('router','WiFi 6 Router Mesh Pro',6499)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <!-- 17 -->
+                    <div class="prod-card">
+                        <div class="prod-img" style="background:linear-gradient(135deg,#2d1b00,#92400e)">
+                            <span class="prod-badge">28% OFF</span>
+                            <button class="wish-btn" onclick="toggleWish(this)">♡</button>
+                            <span class="prod-emoji" style="font-size:88px">💡</span>
+                        </div>
+                        <div class="prod-body">
+                            <div class="prod-cat">Smart Home</div>
+                            <div class="prod-name" onclick="go('details')">SmartBulb RGB 16M Colors</div>
+                            <div class="prod-rating"><span class="stars">★★★★★</span> 4.5 <span>(4,320)</span></div>
+                            <div class="prod-price"><span class="p-now">₹699</span><span class="p-was">₹999</span><span
+                                    class="p-off">28% off</span></div>
+                            <button class="btn btn-primary btn-full" onclick="addCart('bulb','SmartBulb RGB',699)">Add
+                                to Cart</button>
+                        </div>
+                    </div>
+                    <!-- 18 -->
+                    <div class="prod-card">
+                        <div class="prod-img" style="background:linear-gradient(135deg,#0f2027,#203a43)">
+                            <span class="prod-badge red-b">40% OFF</span>
+                            <button class="wish-btn" onclick="toggleWish(this)">♡</button>
+                            <span class="prod-emoji" style="font-size:88px">🔭</span>
+                        </div>
+                        <div class="prod-body">
+                            <div class="prod-cat">Gadgets</div>
+                            <div class="prod-name" onclick="go('details')">DroneCam HD 4K Foldable</div>
+                            <div class="prod-rating"><span class="stars">★★★★★</span> 4.7 <span>(1,890)</span></div>
+                            <div class="prod-price"><span class="p-now">₹14,999</span><span
+                                    class="p-was">₹24,999</span><span class="p-off">40% off</span></div>
+                            <button class="btn btn-primary btn-full"
+                                onclick="addCart('drone','DroneCam HD 4K',14999)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PAGE 3: PRODUCT DETAIL ===== -->
+        <section class="page" id="page-details">
+            <div class="breadcrumb">
+                <span onclick="go('home')"><a>Home</a></span><span class="sep">/</span>
+                <span onclick="go('products')"><a>Electronics</a></span><span class="sep">/</span>
+                <span class="cur">Headphones</span>
+            </div>
+            <div class="detail-layout">
+                <div class="detail-gallery">
+                    <div class="d-main" id="detailMainImg"><span style="font-size:150px">🎧</span></div>
+                    <div class="thumbs">
+                        <div class="thumb th1 active" onclick="thumbPick(this,'🎧')">🎧</div>
+                        <div class="thumb th2" onclick="thumbPick(this,'💻')">💻</div>
+                        <div class="thumb th3" onclick="thumbPick(this,'⌚')">⌚</div>
+                        <div class="thumb th4" onclick="thumbPick(this,'📱')">📱</div>
+                    </div>
+                </div>
+                <div class="detail-info">
+                    <h1>NovaTech Wireless Headphones</h1>
+                    <div class="d-meta">
+                        <div class="detail-rating-box"><span class="stars">★★★★★</span>&nbsp;<span
+                                style="color:#e2e8f0">4.5</span>&nbsp;<span style="color:#64748b">(3,420 reviews)</span>
+                        </div>
+                        <span class="in-stock">✓ In Stock</span>
+                    </div>
+                    <div class="d-price">
+                        <span class="dp-now">₹4,999</span>
+                        <span class="dp-was">₹5,999</span>
+                        <span class="dp-off">17% off</span>
+                    </div>
+                    <p class="d-tax">Inclusive of all taxes</p>
+                    <ul class="feat-list">
+                        <li>Active Noise Cancellation (ANC)</li>
+                        <li>Up to 40 hours battery life</li>
+                        <li>Bluetooth 5.3</li>
+                        <li>Lightweight and comfortable</li>
+                    </ul>
+                    <div class="qty-row">
+                        <span class="qty-lbl">Quantity:</span>
+                        <div class="qty-ctrl">
+                            <button onclick="qtyChange(this,-1)">−</button>
+                            <input type="text" id="detailQty" value="1" readonly>
+                            <button onclick="qtyChange(this,1)">+</button>
+                        </div>
+                    </div>
+                    <div class="d-actions">
+                        <button class="btn btn-primary btn-lg"
+                            onclick="addCart('headphones','NovaTech Wireless Headphones',4999,true)">🛒 Add to
+                            Cart</button>
+                        <button class="btn btn-outline btn-lg" onclick="toggleWish(this)">♡ Add to Wishlist</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PAGE 4: CART ===== -->
+        <section class="page" id="page-cart">
+            <div class="cart-layout">
+                <div>
+                    <div class="cart-box">
+                        <div class="cart-hd" id="cartHd">Your Cart (2 Items)</div>
+                        <div id="cartRows"></div>
+                    </div>
+                    <div style="margin-top:16px">
+                        <span class="btn-link" onclick="go('products')">← Continue Shopping</span>
+                    </div>
+                </div>
+                <div class="sum-box">
+                    <h3>Order Summary</h3>
+                    <div class="sum-row"><span>Subtotal</span><span id="sumSub">₹77,989</span></div>
+                    <div class="sum-row disc"><span>Discount</span><span id="sumDisc">−₹1,000</span></div>
+                    <div class="sum-row"><span>Delivery</span><span style="color:#22c55e;font-weight:600">Free</span>
+                    </div>
+                    <div class="sum-row tot"><span>Total</span><span id="sumTot">₹76,989</span></div>
+                    <button class="btn btn-primary btn-full btn-lg" onclick="go('checkout')">Proceed to Checkout
+                        →</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PAGE 5: CHECKOUT ===== -->
+        <section class="page" id="page-checkout">
+            <div class="steps">
+                <div class="step-item active">
+                    <div class="step-circ">1</div><span class="step-lbl">Address</span>
+                </div>
+                <div class="step-conn"></div>
+                <div class="step-item">
+                    <div class="step-circ">2</div><span class="step-lbl">Delivery</span>
+                </div>
+                <div class="step-conn"></div>
+                <div class="step-item">
+                    <div class="step-circ">3</div><span class="step-lbl">Payment</span>
+                </div>
+                <div class="step-conn"></div>
+                <div class="step-item">
+                    <div class="step-circ">4</div><span class="step-lbl">Review</span>
+                </div>
+            </div>
+            <div class="ck-layout">
+                <div>
+                    <div class="sec-card">
+                        <h3>Delivery Address</h3>
+                        <div class="addr-card sel" onclick="pickAddr(this)">
+                            <span class="addr-edit">Edit</span>
+                            <div class="addr-hd"><span class="addr-tag">🏠 Home</span></div>
+                            <p>Panajpur, Trichy - 620015, Tamil Nadu<br>+91 98765 43210</p>
+                        </div>
+                        <div class="addr-card" onclick="pickAddr(this)">
+                            <div class="addr-hd"><span class="addr-tag">🏫 Hostel</span></div>
+                            <p>NIT Trichy, Hostel Block A<br>+91 98765 43210</p>
+                        </div>
+                        <button class="add-addr">+ Add New Address</button>
+                    </div>
+                    <div class="sec-card">
+                        <h3>Apply Coupon</h3>
+                        <div class="coupon-row">
+                            <input type="text" id="couponInput" placeholder="Enter coupon code (try NOVA1000)">
+                            <button class="btn btn-outline" onclick="applyCoupon()">Apply</button>
+                        </div>
+                    </div>
+                    <div class="ck-nav">
+                        <span class="btn-link" onclick="go('cart')">← Back to Cart</span>
+                        <button class="btn btn-primary btn-lg" onclick="go('payment')">Continue to Delivery →</button>
+                    </div>
+                </div>
+                <div class="sum-box">
+                    <h3>Order Summary</h3>
+                    <div class="sum-row"><span>Items (2)</span><span id="ckSub">₹77,989</span></div>
+                    <div class="sum-row disc"><span>Discount</span><span id="ckDisc">−₹1,000</span></div>
+                    <div class="sum-row"><span>Delivery</span><span style="color:#22c55e;font-weight:600">Free</span>
+                    </div>
+                    <div class="sum-row tot"><span>Total</span><span id="ckTot">₹76,989</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PAGE 6: PAYMENT ===== -->
+        <section class="page" id="page-payment">
+            <div class="steps">
+                <div class="step-item done">
+                    <div class="step-circ">✓</div><span class="step-lbl">Address</span>
+                </div>
+                <div class="step-conn done"></div>
+                <div class="step-item done">
+                    <div class="step-circ">✓</div><span class="step-lbl">Delivery</span>
+                </div>
+                <div class="step-conn done"></div>
+                <div class="step-item active">
+                    <div class="step-circ">3</div><span class="step-lbl">Payment</span>
+                </div>
+                <div class="step-conn"></div>
+                <div class="step-item">
+                    <div class="step-circ">4</div><span class="step-lbl">Review</span>
+                </div>
+            </div>
+            <div class="ck-layout">
+                <div>
+                    <div class="sec-card">
+                        <h3>Select Payment Method</h3>
+                        <div class="pay-opt sel" onclick="pickPay(this)">
+                            <div class="pay-radio"></div>
+                            <span class="pay-em">📱</span>
+                            <div class="pay-info">
+                                <h4>UPI</h4>
+                                <p>Google Pay, PhonePe, Paytm</p>
+                            </div>
+                        </div>
+                        <div class="pay-opt" onclick="pickPay(this)">
+                            <div class="pay-radio"></div>
+                            <span class="pay-em">💳</span>
+                            <div class="pay-info">
+                                <h4>Credit / Debit Card</h4>
+                                <p>Visa, Mastercard, RuPay</p>
+                            </div>
+                        </div>
+                        <div class="pay-opt" onclick="pickPay(this)">
+                            <div class="pay-radio"></div>
+                            <span class="pay-em">🏦</span>
+                            <div class="pay-info">
+                                <h4>Net Banking</h4>
+                                <p>All major banks supported</p>
+                            </div>
+                        </div>
+                        <div class="pay-opt" onclick="pickPay(this)">
+                            <div class="pay-radio"></div>
+                            <span class="pay-em">💵</span>
+                            <div class="pay-info">
+                                <h4>Cash on Delivery (COD)</h4>
+                                <p>Pay when you receive your order</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ck-nav">
+                        <span class="btn-link" onclick="go('checkout')">← Back</span>
+                        <button class="btn btn-primary btn-lg" onclick="go('confirmation')">🔒 Pay ₹76,989</button>
+                    </div>
+                </div>
+                <div class="sum-box">
+                    <h3>Order Summary</h3>
+                    <div class="sum-row"><span>Items (2)</span><span>₹77,989</span></div>
+                    <div class="sum-row disc"><span>Discount</span><span>−₹1,000</span></div>
+                    <div class="sum-row"><span>Delivery</span><span style="color:#22c55e;font-weight:600">Free</span>
+                    </div>
+                    <div class="sum-row tot"><span>Total</span><span>₹76,989</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PAGE 7: CONFIRMATION ===== -->
+        <section class="page" id="page-confirmation">
+            <div class="conf-wrap">
+                <div class="conf-icon">✓</div>
+                <h1>Order Placed Successfully!</h1>
+                <p class="conf-sub">Thank you for shopping with NovaTech.</p>
+                <p class="conf-id">Your order ID is #NT1245678</p>
+                <div class="conf-bag">🛍️</div>
+                <div class="conf-actions">
+                    <button class="btn btn-primary btn-lg" onclick="go('orders')">View My Orders</button>
+                    <button class="btn btn-outline btn-lg" onclick="go('home')">Continue Shopping</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PAGE 8: ORDERS ===== -->
+        <section class="page" id="page-orders">
+            <div class="section-head" style="padding-top:24px">
+                <h2>My Orders</h2>
+            </div>
+            <div class="order-tabs">
+                <span class="otab active" onclick="orderTab(this)">All Orders</span>
+                <span class="otab" onclick="orderTab(this)">Processing</span>
+                <span class="otab" onclick="orderTab(this)">Shipped</span>
+                <span class="otab" onclick="orderTab(this)">Delivered</span>
+                <span class="otab" onclick="orderTab(this)">Cancelled</span>
+            </div>
+            <div class="order-card">
+                <div class="oc-head">
+                    <div>
+                        <div class="oc-id">Order #NT1245678</div>
+                        <div class="oc-date">Placed on 17 Nov 2026</div>
+                        <span class="stat-badge stat-ship">🚚 Shipped</span>
+                    </div>
+                    <div>
+                        <div class="oc-amt">₹4,999</div>
+                        <div style="font-size:12px;color:#64748b;text-align:right;margin-top:4px">1 item</div>
+                    </div>
+                </div>
+                <div class="tracker">
+                    <div class="tracker-steps">
+                        <div class="tr-line"></div>
+                        <div class="tr-fill"></div>
+                        <div class="tracker-item done">
+                            <div class="tr-dot">✓</div>
+                            <div class="tr-lbl">Order Placed</div>
+                            <div class="tr-date">17 Nov</div>
+                        </div>
+                        <div class="tracker-item done">
+                            <div class="tr-dot">✓</div>
+                            <div class="tr-lbl">Packed</div>
+                            <div class="tr-date">17 Nov</div>
+                        </div>
+                        <div class="tracker-item cur">
+                            <div class="tr-dot">🚚</div>
+                            <div class="tr-lbl">Shipped</div>
+                            <div class="tr-date">18 Nov</div>
+                        </div>
+                        <div class="tracker-item">
+                            <div class="tr-dot"></div>
+                            <div class="tr-lbl">Delivered</div>
+                            <div class="tr-date">Expected 20 Nov</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tr-actions">
+                    <button class="btn btn-outline btn-sm" onclick="showToast('Tracking your order...')">Track
+                        Order</button>
+                    <button class="btn btn-ghost btn-sm" onclick="showToast('Download invoice coming soon')">Download
+                        Invoice</button>
+                </div>
+            </div>
+            <div class="order-card">
+                <div class="oc-head">
+                    <div>
+                        <div class="oc-id">Order #NT1245490</div>
+                        <div class="oc-date">Placed on 10 Nov 2026</div>
+                        <span class="stat-badge stat-del">✓ Delivered</span>
+                    </div>
+                    <div>
+                        <div class="oc-amt">₹72,990</div>
+                        <div style="font-size:12px;color:#64748b;text-align:right;margin-top:4px">1 item</div>
+                    </div>
+                </div>
+                <div class="tracker">
+                    <div class="tracker-steps">
+                        <div class="tr-line"></div>
+                        <div class="tr-fill" style="width:100%"></div>
+                        <div class="tracker-item done">
+                            <div class="tr-dot">✓</div>
+                            <div class="tr-lbl">Order Placed</div>
+                            <div class="tr-date">10 Nov</div>
+                        </div>
+                        <div class="tracker-item done">
+                            <div class="tr-dot">✓</div>
+                            <div class="tr-lbl">Packed</div>
+                            <div class="tr-date">11 Nov</div>
+                        </div>
+                        <div class="tracker-item done">
+                            <div class="tr-dot">✓</div>
+                            <div class="tr-lbl">Shipped</div>
+                            <div class="tr-date">12 Nov</div>
+                        </div>
+                        <div class="tracker-item done">
+                            <div class="tr-dot">✓</div>
+                            <div class="tr-lbl">Delivered</div>
+                            <div class="tr-date">14 Nov</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tr-actions">
+                    <button class="btn btn-outline btn-sm" onclick="showToast('Review submitted!')">Write
+                        Review</button>
+                    <button class="btn btn-ghost btn-sm"
+                        onclick="addCart('laptop','Laptop Pro 14',72990);showToast('Added to cart!')">Buy Again</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PAGE 9: AI ASSISTANT ===== -->
+        <section class="page" id="page-assistant">
+            <div class="ai-wrap">
+                <div class="ai-head">
+                    <h1>Ask NovaTech ✨</h1>
+                    <p>Your AI shopping assistant</p>
+                </div>
+                <div class="ai-chips">
+                    <span class="chip" onclick="aiChip(this)">Suggest a laptop under ₹70,000 for coding.</span>
+                    <span class="chip" onclick="aiChip(this)">Best wireless headphones for travel?</span>
+                    <span class="chip" onclick="aiChip(this)">Compare smart watches under ₹5,000</span>
+                </div>
+                <div class="ai-chat" id="aiChat">
+                    <div class="ai-msg">
+                        <div class="ai-av bot">✨</div>
+                        <div class="ai-bubble">Hi! I'm NovaTech AI. Ask me about products, prices, or recommendations. I
+                            can help you find exactly what you need! 🛍️</div>
+                    </div>
+                </div>
+                <div class="ai-input-row">
+                    <input type="text" id="aiInput"
+                        placeholder="Ask anything about products, prices, or recommendations..."
+                        onkeydown="if(event.key==='Enter')aiSend()">
+                    <button class="ai-send" onclick="aiSend()">➤</button>
+                </div>
+            </div>
+        </section>
+
+    </div><!-- /container -->
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-logo">
+                <div class="logo-box" style="width:32px;height:32px;font-size:15px">N</div>
+                NovaTech
+            </div>
+            <div class="footer-links">
+                <a>About</a><a>Contact</a><a>FAQ</a><a>Terms</a><a>Privacy</a>
+            </div>
+            <div class="footer-socials">
+                <div class="soc-btn">▶</div>
+                <div class="soc-btn">📷</div>
+                <div class="soc-btn">in</div>
+                <div class="soc-btn">⬡</div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ===== STATE =====
+        let cart = [
+            { key: 'headphones', name: 'NovaTech Wireless Headphones', price: 4999, qty: 1, img: 'pi-h', em: '🎧' },
+            { key: 'laptop', name: 'Laptop Pro 14', price: 72990, qty: 1, img: 'pi-l', em: '💻' }
+        ];
+        const DISCOUNT = 1000;
+
+        // ===== NAVIGATION =====
+        function go(page) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-' + page).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            const map = {
+                home: 'home', products: 'products', details: 'products', cart: '',
+                checkout: '', payment: '', confirmation: 'orders', orders: 'orders', assistant: 'assistant'
+            };
+            const t = map[page];
+            if (t) document.querySelector('.nav-link[data-page="' + t + '"]')?.classList.add('active');
+            if (page === 'cart') renderCart();
+            // close mobile menu
+            document.getElementById('mobileMenu').style.display = 'none';
+        }
+
+        function toggleMobile() {
+            const m = document.getElementById('mobileMenu');
+            m.style.display = m.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function searchGo() {
+            go('products');
+            showToast('Showing results for: ' + document.getElementById('searchInput').value);
+            document.getElementById('searchInput').value = '';
+        }
+
+        // ===== CART =====
+        function addCart(key, name, price, fromDetail = false) {
+            const qty = fromDetail ? parseInt(document.getElementById('detailQty')?.value || 1) : 1;
+            const em = {
+                headphones: '🎧', laptop: '💻', watch: '⌚', phone: '📱', camera: '📷',
+                speaker: '🔊', tablet: '💊', acer: '💻'
+            }[key] || '📦';
+            const img = {
+                headphones: 'pi-h', laptop: 'pi-l', watch: 'pi-w', phone: 'pi-p',
+                camera: 'pi-c', speaker: 'pi-s', tablet: 'pi-t', acer: 'pi-a'
+            }[key] || 'pi-h';
+            const ex = cart.find(i => i.key === key);
+            if (ex) { ex.qty += qty; }
+            else { cart.push({ key, name, price, qty, img, em }); }
+            updateBadge();
+            showToast('✓ ' + name + ' added to cart');
+            if (!fromDetail) renderCart();
+        }
+
+        function removeCart(key) {
+            cart = cart.filter(i => i.key !== key);
+            renderCart(); updateBadge();
+            showToast('Item removed from cart');
+        }
+
+        function cartQty(key, d) {
+            const i = cart.find(c => c.key === key);
+            if (!i) return;
+            i.qty = Math.max(1, i.qty + d);
+            renderCart(); updateBadge();
+        }
+
+        function updateBadge() {
+            const n = cart.reduce((s, i) => s + i.qty, 0);
+            const b = document.getElementById('cartBadge');
+            b.textContent = n;
+            b.style.display = n > 0 ? 'grid' : 'none';
+        }
+
+        function fmt(n) { return '₹' + n.toLocaleString('en-IN'); }
+
+        function renderCart() {
+            const rows = document.getElementById('cartRows');
+            if (!rows) return;
+            if (cart.length === 0) {
+                rows.innerHTML = '<div style="padding:40px;text-align:center;color:#64748b;font-size:15px">Your cart is empty. <span class="btn-link" onclick="go(\'products\')">Shop now →</span></div>';
+            } else {
+                rows.innerHTML = cart.map(i => `
+      <div class="cart-row">
+        <div class="ci-img ${i.img}">${i.em}</div>
+        <div>
+          <div class="ci-name">${i.name}</div>
+          <div class="ci-sub">In Stock · Free Delivery</div>
+        </div>
+        <div class="ci-price">${fmt(i.price)}</div>
+        <div class="qty-ctrl">
+          <button onclick="cartQty('${i.key}',-1)">−</button>
+          <input type="text" value="${i.qty}" readonly>
+          <button onclick="cartQty('${i.key}',1)">+</button>
+        </div>
+        <button class="ci-del" onclick="removeCart('${i.key}')" title="Remove">🗑</button>
+      </div>`).join('');
+            }
+            const sub = cart.reduce((s, i) => s + i.price * i.qty, 0);
+            const tot = Math.max(0, sub - DISCOUNT);
+            const hd = document.getElementById('cartHd');
+            if (hd) hd.textContent = 'Your Cart (' + cart.reduce((s, i) => s + i.qty, 0) + ' Items)';
+            ['sumSub', 'ckSub'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = fmt(sub); });
+            ['sumTot', 'ckTot'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = fmt(tot); });
+        }
+
+        // ===== DETAIL QUANTITY =====
+        function qtyChange(btn, d) {
+            const inp = btn.parentElement.querySelector('input');
+            inp.value = Math.max(1, parseInt(inp.value) + d);
+        }
+
+        // ===== WISHLIST =====
+        function toggleWish(btn) {
+            btn.classList.toggle('active');
+            const isActive = btn.classList.contains('active');
+            if (btn.textContent.includes('Add') || btn.textContent.includes('Wishlist')) {
+                btn.textContent = isActive ? '♥ Added to Wishlist' : '♡ Add to Wishlist';
+            } else {
+                btn.textContent = isActive ? '♥' : '♡';
+            }
+            showToast(isActive ? '♥ Added to wishlist' : 'Removed from wishlist');
+        }
+
+        // ===== HERO DOTS =====
+        function heroDot(el) {
+            document.querySelectorAll('.hero-dots span').forEach(s => s.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        // ===== THUMBNAIL =====
+        function thumbPick(el, emoji) {
+            document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+            const main = document.getElementById('detailMainImg');
+            if (main) main.innerHTML = '<span style="font-size:150px">' + emoji + '</span>';
+        }
+
+        // ===== FILTERS =====
+        function updatePrice(el) {
+            document.getElementById('priceVal').textContent = '₹' + parseInt(el.value).toLocaleString('en-IN');
+        }
+        function clearFilters() {
+            document.querySelectorAll('.sidebar input[type=checkbox]').forEach(c => c.checked = false);
+            const r = document.getElementById('priceRange');
+            if (r) { r.value = 50000; updatePrice(r); }
+            showToast('Filters cleared');
+        }
+
+        // ===== ADDRESS / PAYMENT =====
+        function pickAddr(el) {
+            document.querySelectorAll('.addr-card').forEach(a => a.classList.remove('sel'));
+            el.classList.add('sel');
+        }
+        function pickPay(el) {
+            document.querySelectorAll('.pay-opt').forEach(a => a.classList.remove('sel'));
+            el.classList.add('sel');
+        }
+        function applyCoupon() {
+            const v = document.getElementById('couponInput').value.toUpperCase();
+            if (v === 'NOVA1000') showToast('🎉 Coupon applied! You saved ₹1,000');
+            else if (v) showToast('✓ Coupon applied successfully');
+            else showToast('Please enter a coupon code');
+        }
+
+        // ===== ORDER TABS =====
+        function orderTab(el) {
+            document.querySelectorAll('.otab').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        // ===== AI ASSISTANT =====
+        const aiResponses = {
+            laptop: {
+                text: "Here are some great options under ₹70,000 for coding:",
+                products: [
+                    { name: "Acer Aspire 7", specs: "Intel i5 (12th Gen) · 16 GB RAM · 512 GB SSD", price: "₹64,990", rating: "4.5", em: "💻", key: "acer" },
+                    { name: "Laptop Pro 14", specs: "Intel i7 · 16 GB RAM · 1 TB SSD", price: "₹72,990", rating: "4.6", em: "💻", key: "laptop" }
+                ]
+            },
+            headphones: {
+                text: "Best wireless headphones for travel:",
+                products: [
+                    { name: "NovaTech Wireless Headphones", specs: "ANC · 40h Battery · BT 5.3", price: "₹4,999", rating: "4.5", em: "🎧", key: "headphones" },
+                    { name: "Sony WH-1000XM5", specs: "Industry best ANC · 30h Battery", price: "₹28,990", rating: "4.8", em: "🎧", key: "headphones" }
+                ]
+            },
+            watch: {
+                text: "Smart watches under ₹5,000 comparison:",
+                products: [
+                    { name: "Smart Watch Pro", specs: "SpO2 · Heart Rate · GPS · 7 days battery", price: "₹3,499", rating: "4.5", em: "⌚", key: "watch" },
+                    { name: "FitPro Band X", specs: "Health monitor · 10 days battery", price: "₹2,199", rating: "4.3", em: "⌚", key: "watch" }
+                ]
+            }
+        };
+
+        function aiChip(el) { document.getElementById('aiInput').value = el.textContent; aiSend(); }
+
+        function aiSend() {
+            const inp = document.getElementById('aiInput');
+            const text = inp.value.trim();
+            if (!text) return;
+            const chat = document.getElementById('aiChat');
+            chat.insertAdjacentHTML('beforeend', `
+    <div class="ai-msg user">
+      <div class="ai-av user">🧑</div>
+      <div class="ai-bubble">${escHtml(text)}</div>
+    </div>`);
+            inp.value = '';
+            chat.scrollTop = chat.scrollHeight;
+            setTimeout(() => {
+                const low = text.toLowerCase();
+                let resp = aiResponses.laptop;
+                if (low.includes('head') || low.includes('music') || low.includes('travel')) resp = aiResponses.headphones;
+                else if (low.includes('watch') || low.includes('fitness')) resp = aiResponses.watch;
+                const cards = resp.products.map(p => `
+      <div class="ai-prod-card">
+        <div class="ai-pi">${p.em}</div>
+        <div class="ai-pi-info" style="flex:1">
+          <h4>${p.name}</h4>
+          <div class="meta">${p.specs}</div>
+          <div class="price">${p.price} &nbsp;<span style="color:#f59e0b;font-size:11px">★ ${p.rating}</span></div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="addCart('${p.key}','${p.name}',${parseInt(p.price.replace(/[₹,]/g, ''))});showToast('Added to cart!')">View Product</button>
+      </div>`).join('');
+                chat.insertAdjacentHTML('beforeend', `
+      <div class="ai-msg">
+        <div class="ai-av bot">✨</div>
+        <div class="ai-bubble">${resp.text}${cards}</div>
+      </div>`);
+                chat.scrollTop = chat.scrollHeight;
+            }, 800);
+        }
+
+        function escHtml(t) {
+            return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        // ===== TOAST =====
+        let toastTimer;
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+        }
+
+        // ===== REAL PRODUCT IMAGES =====
+        // Map: product name keyword → Unsplash image URL
+        const PRODUCT_IMAGES = {
+            'NovaTech Wireless Headphones': 'headphones.png',
+            'Wireless Headphones': 'headphones.png',
+            'Laptop Pro 14': 'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400&h=300&fit=crop&q=90',
+            'Smart Watch Pro': 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=300&fit=crop&q=85',
+            'Smart Watch': 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=300&fit=crop&q=85',
+            'NovaTech Phone X': 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=300&fit=crop&q=85',
+            'ProCam DSLR 4K': 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400&h=300&fit=crop&q=85',
+            'BoomBox Speaker 360°': 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&h=300&fit=crop&q=85',
+            'NovaPad Tablet 10': 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&h=300&fit=crop&q=85',
+            'LaserJet Pro Printer': 'https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?w=400&h=300&fit=crop&q=85',
+            'GamePad Pro X Controller': 'https://images.unsplash.com/photo-1593118247619-e2d6f056869e?w=400&h=300&fit=crop&q=85',
+            'UltraView 27': 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&h=300&fit=crop&q=85',
+            'MechKey RGB Keyboard': 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&h=300&fit=crop&q=85',
+            'SilentGlide Wireless Mouse': 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&h=300&fit=crop&q=85',
+            'ProMic USB Studio Microphone': 'https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=400&h=300&fit=crop&q=85',
+            'PowerBank 20000mAh Fast': 'https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=400&h=300&fit=crop&q=85',
+            'TrueSound Earbuds Pro': 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400&h=300&fit=crop&q=85',
+            'WiFi 6 Router Mesh Pro': 'https://images.unsplash.com/photo-1606904825846-647eb07f5be2?w=400&h=300&fit=crop&q=85',
+            'SmartBulb RGB 16M Colors': 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop&q=85',
+            'DroneCam HD 4K Foldable': 'https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=400&h=300&fit=crop&q=85',
+        };
+
+        function injectProductImages() {
+            document.querySelectorAll('.prod-card').forEach(card => {
+                const nameEl = card.querySelector('.prod-name');
+                if (!nameEl) return;
+                const name = nameEl.textContent.trim();
+                // Find matching image
+                let imgUrl = null;
+                for (const [key, url] of Object.entries(PRODUCT_IMAGES)) {
+                    if (name.includes(key) || key.includes(name.substring(0, 10))) {
+                        imgUrl = url; break;
+                    }
+                }
+                if (!imgUrl) return;
+                const imgDiv = card.querySelector('.prod-img');
+                if (!imgDiv) return;
+                // Remove emoji span
+                const emojiSpan = imgDiv.querySelector('.prod-emoji');
+                if (emojiSpan) emojiSpan.remove();
+                // Add has-photo class
+                imgDiv.classList.add('has-photo');
+                // Remove inline background style gradient
+                imgDiv.style.background = '#0a0a14';
+                // Insert real image (behind badge and wish btn)
+                const img = document.createElement('img');
+                img.className = 'prod-real-img';
+                img.src = imgUrl;
+                img.alt = name;
+                img.loading = 'lazy';
+                img.onerror = function () { this.style.display = 'none'; imgDiv.style.background = 'linear-gradient(135deg,#2d1b69,#4c1d95)'; };
+                imgDiv.insertBefore(img, imgDiv.firstChild);
+            });
+        }
+
+        // ===== INIT =====
+        renderCart();
+        updateBadge();
+        injectProductImages();
+    </script>
+</body>
+
+</html>
